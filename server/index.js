@@ -91,11 +91,19 @@ app.post('/api/chat', async (req, resp) => {
       messages: [
         { 
           role: 'system', 
-          content: `You are a DeviceCare customer service expert.
-            given a customer query, a question bank question and a question bank answer from the DeviceCare FAQ,
+          content: `
+            You are a DeviceCare customer service expert.
+
+            Given a customer query, a question bank question and a question bank answer from the DeviceCare FAQ,
             rephrase the question bank answer to be more conversational, polite and easier to understand.
+            
             DO NOT add any information that is not in the provided question bank answer.
-            `
+
+            ONLY use affirmative injections when the customer query starts with 'Can', 'Could', 'Does', 'Is', 'May', 'Will' or 'Would',
+            otherwise, DO NOT use them.
+            
+            Personalize the answer by addressing the customer directly as 'you' where appropriate.
+          `
         },
         { 
           role: 'user', 
