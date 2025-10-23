@@ -1,7 +1,26 @@
 import { useState, useCallback } from 'react';
 
-
-function QueryAssistant(endpoint = 'http://localhost:4000/api/chat') {
+/**
+ * A custom React hook that manages interaction with a chat assistant API.
+ * 
+ * Handles:
+ * - Sending user queries to the specified endpoint via POST
+ * - Loading state (`pending`) during requests
+ * - Error state (`error`) for network or response validation failures
+ * - Response validation (expects `{ reply: string }` JSON)
+ * 
+ * @param endpoint - The API URL to send queries to (default: 'http://localhost:4000/api/chat')
+ * 
+ * @returns An object containing:
+ *   - `ask(query: string): Promise<string>` – sends a query and returns the assistant's reply
+ *   - `pending: boolean` – true while a request is in flight
+ *   - `error: string | null` – error message if the last request failed, otherwise null
+ * 
+ * @example
+ * const { ask, pending, error } = useAssistant('/api/chat');
+ * const reply = await ask('Hello!');
+ */
+function useAssistant(endpoint = 'http://localhost:4000/api/chat') {
   const [pending, setPending] = useState(false)
   const [error, setError] = useState<string | null>(null);
 
@@ -46,4 +65,4 @@ function QueryAssistant(endpoint = 'http://localhost:4000/api/chat') {
 return { ask, pending, error };
 };
 
-export default QueryAssistant
+export default useAssistant

@@ -6,6 +6,11 @@ export type ChatBubble1Props = {
   datetimestr: string;
 }
 
+
+/**
+ * Renders a chat bubble with timestamp for logging.
+ * Styling of bubble based on role (user or assistant).
+ */
 function ChatBubble(props: ChatBubble1Props) {
 
   const isUser = props.role === 'user';
@@ -22,10 +27,10 @@ function ChatBubble(props: ChatBubble1Props) {
           textAlign: 'left',
           wordBreak: 'break-word',
           boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-          ml: isUser ? 'auto' : 0,   // User: push to right
-          mr: isUser ? 1 : 0,        // User: fixed 8px from right
-          pl: isUser ? 1 : 1.5,      // Adjust padding for alignment
-          pr: isUser ? 1.5 : 1,      // Adjust padding for alignment
+          ml: isUser ? 'auto' : 0,   // User: push to right, Assistant: push to left
+          mr: isUser ? 1 : 0,
+          pl: isUser ? 1 : 1.5,
+          pr: isUser ? 1.5 : 1,
         }}
       >
 

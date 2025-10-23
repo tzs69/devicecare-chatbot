@@ -7,6 +7,10 @@ export type ChatWindowProps = {
   messages: MessageEntry[]
 }
 
+/**
+ * Renders a scrollable list of chat bubbles from the message history.
+ * User messages align right; assistant messages align left.
+ */
 function ChatWindow(props: ChatWindowProps) {
   
   return (

@@ -1,3 +1,4 @@
+// Function to format a Date object into "DD MMM, HH:mm" format
 function formatDate(date: Date): string {
   const day = date.getDate();
   const month = date.toLocaleString('en-GB', { month: 'short' });

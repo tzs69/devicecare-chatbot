@@ -5,8 +5,8 @@ const { OpenAI } = require('openai');
 dotenv.config();
 
 
-// FAQ content 
-const FAQ = [
+// FAQ question bank
+const FAQs = [
   { q: 'What is DeviceCare?',
     a: 'DeviceCare is a comprehensive device management solution designed to help users monitor, protect, and optimize their electronic devices, ensuring they run smoothly and efficiently.' },
   { q: 'How do I install DeviceCare on my device?',
@@ -30,25 +30,27 @@ const FAQ = [
 ];
 
 (async () => {
-  // Combine Q + A to give embeddings more signal
-  const inputs = FAQ.map(f => `${f.q}\n${f.a}`); 
+  // Concatenate question and answer into one string to give embeddings more signal
+  const inputs = FAQs.map(f => `${f.q}\n${f.a}`); 
 
   console.log('Embedding FAQs…');
 
+  // Initialize OpenAI client
   const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
   const resp = await openai.embeddings.create({
     model: 'text-embedding-3-small',
     input: inputs,
   });
-
-  const out = FAQ.map((f, idx) => ({ // Structure of each faq item in 'VDB' : { query: , answer: , embedding: }
+  // Embed each concatenated qa string into a high-dim vector 
+  // Store embedded vector in 'out' array along with original question and answer for ease of retrieval
+  const out = FAQ.map((f, idx) => ({
     q: f.q,
     a: f.a,
     embedding: resp.data[idx].embedding
   }));
 
   const outPath = path.join(__dirname, 'faqs.json');
-  fs.writeFileSync(outPath, JSON.stringify(out, null, 2));
+  fs.writeFileSync(outPath, JSON.stringify(out, null, 2)); // Convert 'out' to json(w indent) and write to faqs.json
   console.log('Wrote', outPath);
 })().catch(e => {
   console.error(e);
