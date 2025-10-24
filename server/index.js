@@ -70,7 +70,7 @@ app.post('/api/chat', async (req, resp) => {
     
     // Fallback Mechanism: Set threshold for within-scope; 
     // If cosine similarity between query and best match (qa pair) is below threshold, return default message
-    const THRESHOLD = 0.65; // tune 0.60–0.75 (Higher for stricter control)
+    const THRESHOLD = 0.55; 
     if (!best || bestScore < THRESHOLD) {
       console.log('[No match] highest sim =', bestScore.toFixed(3));
       return resp.json({
